@@ -203,11 +203,13 @@ class HolidayList:
             print("{}\n{}\n".format(i.date.strftime('%a'), i))
 
 
-    def getWeather(weekNum):
+    def getWeather(self, weekNum):
         # Convert weekNum to range between two days
         # Use Try / Except to catch problems
         # Query API for weather in that week range
         # Format weather information and return weather string.
+
+        # date_string = '{}-{}'.format(datetime.datetime.now().year, weekNum)
 
         pass
 
@@ -337,18 +339,19 @@ def main():
                 user_year = int(input('Please input the year you want to view holidays for:'))
                 print(user_year)
 
-                print('Which week? [1-52, 0 for current week')
+                print('Which week? [1-52]')
                 user_week = int(input('Please input the week you want to view holidays for:'))
                 print(user_week)
 
-                if user_week > 52 or user_week < 0:
-                    print('Invalid week!')
-                elif user_week == 0:
-                    current_date = datetime.datetime.now()
-                    user_week = datetime.datetime.strftime(current_date, '%W')
+                year_limit = datetime.datetime.now().year + 2
 
-                filtered_list = holiday_list.filter_holidays_by_week(user_year, user_week) # filters according to user input
-                holiday_list.displayHolidaysInWeek(filtered_list) # displayed holidays for year and week selected
+                if user_week > 52 or user_week < 1:
+                    print('Invalid week!')
+                elif user_year > year_limit:
+                    print('That year has not been scraped yet!')
+                else:
+                    filtered_list = holiday_list.filter_holidays_by_week(user_year, user_week) # filters according to user input
+                    holiday_list.displayHolidaysInWeek(filtered_list) # displayed holidays for year and week selected
 
             else:
                 print('Invalid option for holiday viewing!')
